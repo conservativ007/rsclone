@@ -1,4 +1,5 @@
 import { score, player, gameSpeed } from './start_game';
+import { informForDesktop } from "./functions/functions.js";
 import { canvas } from './index';
 import Coin from './coin';
 
@@ -10,8 +11,7 @@ let coin;
 const coins = [];
 
 let coinsText;
-// должен быть именно обьект а не переменная типа let coinsCounter = 0;
-// удалить эти строки через несколько коммитов)
+
 export const coinsCounter = {
   counter: 0,
 };
@@ -32,7 +32,7 @@ const randY = [
 
 function getCoin() {
   coinsText = new Text(
-    `${lang[localStorage.getItem('langSelected')].coinsTxt} ${coinsCounter.counter}`, 350, 25, 'right', '#212121', '20',
+    `${lang[localStorage.getItem('langSelected')].coinsTxt} ${coinsCounter.counter}`, informForDesktop.actualCoinsTextLeft, informForDesktop.actualCoinsTextTop, 'left', '#212121', '20',
   );
 
   coinsText.Draw();

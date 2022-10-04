@@ -12,13 +12,19 @@ import main from './pages/main';
 import { dead } from './pages/dead';
 import gameOver from './pages/game-over';
 
-// let lives;
+import { informForDesktop } from "./functions/functions.js";
+
+// let's make the game max width
+
 let score;
 let highScore;
+
 let highCoins;
+let hightCoinsText;
+
 let scoreText;
 let hightScoreText;
-let hightCoinsText;
+
 let livesText;
 let gameSpeed;
 let player;
@@ -29,8 +35,13 @@ const keys = {};
 let coinImage;
 const playSound = new GameSound();
 
+
+
 function start() {
-  canvas.width = window.innerWidth;
+
+  let withOfGame = document.body.getBoundingClientRect().width;
+
+  canvas.width = withOfGame;
   canvas.height = window.innerHeight - 205;
 
   document.addEventListener('keydown', (e) => {
@@ -73,17 +84,18 @@ function start() {
   player.start();
 
   scoreText = new Text(
-    `${lang[localStorage.getItem('langSelected')].scoreTxt} ${score}`, 25, 25, 'left', '#212121', '20',
+    `${lang[localStorage.getItem('langSelected')].scoreTxt} ${score}`, informForDesktop.scoreLeft, informForDesktop.scoreTop, 'left', '#212121', '20',
   );
   livesText = new Text(
-    `${lang[localStorage.getItem('langSelected')].livesTxt} ${localStorage.getItem('lives')}`, 500, 25, 'right', '#212121', '20',
+    `${lang[localStorage.getItem('langSelected')].livesTxt} ${localStorage.getItem('lives')}`, informForDesktop.livesTextLeft, informForDesktop.livesTextTop, 'left', '#212121', '20',
   );
   hightScoreText = new Text(
-    `${lang[localStorage.getItem('langSelected')].bestScoreTxt} ${highScore}`, canvas.width - 150, 25, 'right', '#212121', '20',
+    `${lang[localStorage.getItem('langSelected')].bestScoreTxt} ${highScore}`, informForDesktop.hightScoreTextLeft, informForDesktop.hightScoreTextTop, 'left', '#212121', '20',
   );
   hightCoinsText = new Text(
-    `${lang[localStorage.getItem('langSelected')].coinsTxt} ${highCoins}`, canvas.width - 25, 25, 'right', '#212121', '20',
+    `${lang[localStorage.getItem('langSelected')].bestCoinsTxt} ${highCoins}`, informForDesktop.hightCoinsTextLeft, informForDesktop.hightCoinsTextTop, 'left', '#212121', '20',
   );
+
   createSnowFlakes();
   // playSound.playFon();
   requestAnimationFrame(Update);
@@ -167,7 +179,7 @@ function Update() {
 
   if (coinsCounter.counter > highCoins) {
     highCoins = coinsCounter.counter;
-    hightCoinsText.t = `${lang[localStorage.getItem('langSelected')].coinsTxt} ${highCoins}`;
+    hightCoinsText.t = `${lang[localStorage.getItem('langSelected')].bestCoinsTxt} ${highCoins}`;
   }
 
   gameSpeed += 0.003;

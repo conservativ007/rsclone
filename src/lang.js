@@ -2,6 +2,7 @@ const lang = {
   en: {
     scoreTxt: 'Score:',
     coinsTxt: 'Coins:',
+    bestCoinsTxt: 'Best coins:',
     livesTxt: 'Lives:',
     bestScoreTxt: 'Best score:',
     startGameBtn: 'Start Game',
