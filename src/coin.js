@@ -6,7 +6,7 @@ export default class Coin {
     this.y = options.y;
     this.width = options.width;
 
-    console.log(this.width);
+    // console.log(this.width);
 
     this.height = options.height;
 

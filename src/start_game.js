@@ -13,6 +13,7 @@ import { dead } from './pages/dead';
 import gameOver from './pages/game-over';
 
 import { informForDesktop } from "./functions/functions.js";
+import { getControlsToMobile } from './getControlsToMobile.js';
 
 // let's make the game max width
 
@@ -32,10 +33,8 @@ let obstacles = [];
 const coins = [];
 
 const keys = {};
-let coinImage;
+let heroImage;
 const playSound = new GameSound();
-
-
 
 function start() {
 
@@ -67,11 +66,11 @@ function start() {
     highCoins = localStorage.getItem('highCoins');
   }
 
-  coinImage = new Image();
-  coinImage.src = localStorage.getItem('SpriteImage');
+  heroImage = new Image();
+  heroImage.src = localStorage.getItem('SpriteImage');
 
   player = new Hero({
-    image: coinImage,
+    image: heroImage,
     width: 600,
     height: 100,
     numberOfFrames: 6,
@@ -82,6 +81,8 @@ function start() {
   });
 
   player.start();
+
+  // console.log(player)
 
   scoreText = new Text(
     `${lang[localStorage.getItem('langSelected')].scoreTxt} ${score}`, informForDesktop.scoreLeft, informForDesktop.scoreTop, 'left', '#212121', '20',
@@ -96,9 +97,14 @@ function start() {
     `${lang[localStorage.getItem('langSelected')].bestCoinsTxt} ${highCoins}`, informForDesktop.hightCoinsTextLeft, informForDesktop.hightCoinsTextTop, 'left', '#212121', '20',
   );
 
+
+
   createSnowFlakes();
   // playSound.playFon();
   requestAnimationFrame(Update);
+
+  // get mobile controls
+  getControlsToMobile(player);
 }
 
 const initialSpawnTimer = 200;
@@ -195,6 +201,8 @@ function Update() {
 
   // spawn clouds
   getClouds();
+
+
 }
 
 export {

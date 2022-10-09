@@ -31,6 +31,8 @@ export default class Hero {
     this.test = options.test;
 
     this.sound = new PlayerSound();
+
+    this.counter = 0;
   }
 
   update() {
@@ -60,21 +62,6 @@ export default class Hero {
     );
   }
 
-  // gravity
-  // gravityGo() {
-  //   console.log(this.test)
-  //   this.y += this.dy;
-
-  //   if (this.y + this.height < canvas.height) {
-  //     this.dy += this.gravity;
-  //     this.grounded = false;
-  //   } else {
-  //     this.dy = 0;
-  //     this.grounded = true;
-  //     this.y = canvas.height - this.height;
-  //   }
-  // }
-
   gravityGo() {
     this.y += this.dy;
 
@@ -103,37 +90,33 @@ export default class Hero {
     }
   }
 
-  // jump
-  getReadyToJump() {
-    if (keys.Space || keys.KeyW || keys.ArrowUp) {
-      this.sound.jumpUp();
-      this.Jump();
-    } else {
-      this.jumpTimer = 0;
-    }
-    if (keys.KeyM || keys.ArrowRight) {
-      if (this.dx < canvas.width - 100) this.dx += 5;
-      this.sx = 0;
-      this.isLeft = false;
-      this.numberOfFrames = 6;
-    }
-    if (keys.KeyN || keys.ArrowLeft) {
-      if (this.dx > 0) this.dx -= 5;
-      this.sx = 100;
-      this.isLeft = true;
-      this.numberOfFrames = 6;
-    }
-    if (keys.Escape) {
-      window.location.reload();
-    }
+  moveToRight() {
+    if (this.dx < canvas.width - 100) this.dx += 5;
+    this.sx = 0;
+    this.isLeft = false;
+    this.numberOfFrames = 6;
   }
 
-  Jump() {
+  moveToLeft() {
+    if (this.dx > 0) this.dx -= 5;
+    this.sx = 100;
+    this.isLeft = true;
+    this.numberOfFrames = 6;
+  }
+
+  prepareForJump() {
+    // console.log("prepare for jump");
     if (this.grounded && this.jumpTimer === 0) {
+      this.sound.jumpUp();
       this.jumpTimer = 1;
       this.dy = -this.jumpForce;
       this.sound.jumpDown();
-    } else if (this.jumpTimer > 0 && this.jumpTimer < 15) {
+    }
+  }
+
+  heroJump() {
+    // console.log("hero jump");
+    if (this.jumpTimer > 0 && this.jumpTimer < 15) {
       this.jumpTimer += 1;
       this.dy = -this.jumpForce - (this.jumpTimer / 50);
       this.numberOfFrames = 1;
@@ -143,6 +126,33 @@ export default class Hero {
         this.sx = 500;
       }
     }
+  }
+
+  // jump
+
+  getReadyToJump(bool = false) {
+
+    if (keys.Space || keys.KeyW || keys.ArrowUp || bool === true) {
+      // this.counter += 1;
+      // console.log("get ready to jump", this.counter);
+      this.jump();
+    } else {
+      this.jumpTimer = 0;
+    }
+    if (keys.KeyM || keys.ArrowRight) {
+      this.moveToRight();
+    }
+    if (keys.KeyN || keys.ArrowLeft) {
+      this.moveToLeft();
+    }
+    if (keys.Escape) {
+      window.location.reload();
+    }
+  }
+
+  jump() {
+    this.prepareForJump();
+    this.heroJump();
   }
 
   start() {
