@@ -16,19 +16,8 @@ export const coinsCounter = {
   counter: 0,
 };
 
-let coinY;
 let randTime;
-const randY = [
-  {
-    y: 350,
-  },
-  {
-    y: 600,
-  },
-  {
-    y: 300,
-  },
-];
+const arrCoinRandY = [100, 150, 200, 250];
 
 function getCoin() {
   coinsText = new Text(
@@ -40,13 +29,12 @@ function getCoin() {
   if (score % 200 === 0) {
     randTime = getRandomInt(20, 100);
     randTime += 200;
-    coinY = randY[getRandomInt(0, 3)];
   }
 
   if (score % randTime === 0) {
     coin = new Coin({
       x: canvas.width,
-      y: coinY.y,
+      y: arrCoinRandY[getRandomInt(0, 4)],
       width: 504,
       height: 84,
       numberOfFrames: 6,

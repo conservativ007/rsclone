@@ -4,6 +4,7 @@ import { canvas } from '../index';
 
 export default function gameOver() {
   document.body.removeChild(canvas);
+  document.querySelector(".controls").style.display = "none";
   localStorage.setItem('animate', 'false');
   const lg = localStorage.getItem('langSelected');
   const pageWrapper = document.querySelector('.page-wrapper');

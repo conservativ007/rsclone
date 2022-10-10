@@ -1,6 +1,10 @@
 export function getControlsToMobile(player) {
   let bodyWidth = document.body.getBoundingClientRect().width;
-  if (bodyWidth >= 700) return;
+  const isMobile = /Mobile|webOS|BlackBerry|IEMobile|MeeGo|mini|Fennec|Windows Phone|Android|iP(ad|od|hone)/i.test(navigator.userAgent);
+
+  // if (bodyWidth >= 700) return;
+  if (isMobile !== true) return;
+
 
   let timerId = null;
   let startMove = false;
@@ -105,7 +109,6 @@ export function getControlsToMobile(player) {
       timerId = setInterval(() => {
         player.dx = player.dx -= 2;
         player.y = player.y - 7;
-        player.sx = 200;
       }, 1);
     }
   }
@@ -116,7 +119,6 @@ export function getControlsToMobile(player) {
     let styleId = setTimeout(() => {
       item.style = ""
       clearInterval(styleId);
-      player.sx = 0;
     }, 200);
 
     clearInterval(timerId);

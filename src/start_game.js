@@ -54,7 +54,6 @@ function start() {
   ctx.font = '20px sans-serif';
 
   gameSpeed = 3;
-  // lives = 3;
   score = 0;
   highScore = 0;
   highCoins = 0;
